@@ -2,12 +2,13 @@
 local namespace = {}
 
 local overrides = require('overrides')
-local iteration = require('iteration')
+-- local iteration = require('iteration')
+local discovery = require('discovery')
 
 return {
     enable = function(self, config)
         overrides.enable(config)
-        iteration.enable(config)
+        discovery.enable(config)
     end,
     disable = function(self, config)
     end,
@@ -18,7 +19,7 @@ return {
         overrides.registerOverrideFunction(func)
     end,
     setIterationOption = function(self, key, value)
-        iteration.setOption(key, value)
+        discovery.setOption(key, value)
     end,
 }, {
   public = {
