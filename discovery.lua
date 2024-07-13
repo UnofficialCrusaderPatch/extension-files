@@ -178,13 +178,13 @@ local DiscoveryHandler = {
         local name = filename()
         local t = dosTime()
         
-        if self.filetimes[name] == nil then
+        if self.filetimes[name:lower()] == nil then
           log(VERBOSE, string.format("discoverForPattern: discovered new map: %s", name))
           table.insert(self.filenames, name)
           self.count = self.count + 1
         end
         
-        self.filetimes[name] = t
+        self.filetimes[name:lower()] = t
         
         local hasNext = rawInterface.FindNextFileA(handle, ptr_win32FindData)
         if hasNext == 0 then
@@ -205,7 +205,7 @@ local DiscoveryHandler = {
     
     for i=1, #self.filenames do
       local name = self.filenames[i]
-      local t = self.filetimes[name]
+      local t = self.filetimes[name:lower()]
     
       local shortname = name
     
