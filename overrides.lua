@@ -3,9 +3,6 @@
 local FILE_OVERRIDES = {}
 local FILE_OVERRIDE_FUNCTIONS = {}
 
-local logFileAccess = nil
-
-
 local function onOpenFile(file)
 
   local override = nil
@@ -29,21 +26,15 @@ end
 
 
 local function overwriteResource(filepath)
-  if logFileAccess then
-    log(DEBUG, "Game opened file: " .. tostring(filepath))
-  end
+  log(VERBOSE, "Game opened file: " .. tostring(filepath))
 
   local override = onOpenFile(filepath)
 
   if override == nil then
-    if logFileAccess then
-      log(DEBUG, "No override found for: '" .. tostring(filepath) .. "'")
-    end
+    log(VERBOSE, "No override found for: '" .. tostring(filepath) .. "'")
   else
     override = ucp.internal.resolveAliasedPath(override)
-    if logFileAccess then
-      log(DEBUG, "File '" .. tostring(filepath) .. "' overriden with: " .. tostring(override))
-    end
+    log(VERBOSE, "File '" .. tostring(filepath) .. "' overriden with: " .. tostring(override))
   end
   
   return override
@@ -60,7 +51,7 @@ local function setupIOhooks()
     local o_open
     local function _openHook(fileName, mode, perm)
       local luaFileName = core.readString(fileName)
-      -- log(VERBOSE, "_open: " .. luaFileName .. " mode: " .. string.format("%X", mode) .. " perm: " .. string.format("%X", perm))
+      log(VERBOSE, "_open: " .. tostring(luaFileName) .. " mode: " .. string.format("%X", mode) .. " perm: " .. string.format("%X", perm))
 
       luaFileName = ucp.internal.resolveAliasedPath(luaFileName)
 
@@ -115,7 +106,7 @@ local function setupIOhooks()
     local o_fopen
     local function fopenHook(fileName, mode)
       local luaFileName = core.readString(fileName)
-      -- log(2, "fopen: " .. luaFileName .. " mode: " .. mode)
+      log(VERBOSE, "fopen: " .. tostring(luaFileName) .. " mode: " .. tostring(mode))
 
       luaFileName = ucp.internal.resolveAliasedPath(luaFileName)
 
@@ -353,10 +344,6 @@ end
 
 return {
   enable = function(config)
-
-    if config and config.logFileAccess then
-      logFileAccess = true
-    end
     
     setupIOhooks()
 
@@ -371,7 +358,7 @@ return {
 
     newFile = newFile:gsub("/+", "\\")
 
-    log(DEBUG, "Registering override for: " .. file .. ": " .. newFile)
+    log(VERBOSE, "Registering override for: " .. file .. ": " .. newFile)
 
     FILE_OVERRIDES[file] = newFile
   end,
