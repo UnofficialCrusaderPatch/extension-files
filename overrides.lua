@@ -26,15 +26,15 @@ end
 
 
 local function overwriteResource(filepath)
-  log(VERBOSE, "Game opened file: " .. tostring(filepath))
+  log(3, "Game opened file: " .. tostring(filepath))
 
   local override = onOpenFile(filepath)
 
   if override == nil then
-    log(VERBOSE, "No override found for: '" .. tostring(filepath) .. "'")
+    log(3, "No override found for: '" .. tostring(filepath) .. "'")
   else
     override = ucp.internal.resolveAliasedPath(override)
-    log(VERBOSE, "File '" .. tostring(filepath) .. "' overriden with: " .. tostring(override))
+    log(3, "File '" .. tostring(filepath) .. "' overriden with: " .. tostring(override))
   end
   
   return override
@@ -51,7 +51,7 @@ local function setupIOhooks()
     local o_open
     local function _openHook(fileName, mode, perm)
       local luaFileName = core.readString(fileName)
-      log(VERBOSE, "_open: " .. tostring(luaFileName) .. " mode: " .. string.format("%X", mode) .. " perm: " .. string.format("%X", perm))
+      log(3, "_open: " .. tostring(luaFileName) .. " mode: " .. string.format("%X", mode) .. " perm: " .. string.format("%X", perm))
 
       luaFileName = ucp.internal.resolveAliasedPath(luaFileName)
 
@@ -59,17 +59,17 @@ local function setupIOhooks()
       local retValue
       local o = overwriteResource(luaFileName)
       if o ~= nil then
-        -- log(VERBOSE, "Overriding with: " .. o)
+        -- log(3, "Overriding with: " .. o)
         -- core.writeString(ovrsBuffer, o)
         retValue = io.openFileDescriptor(o, mode, perm)
         -- retValue = _open(ucp.internal.registerString(o), mode, perm)
       else
-        -- log(VERBOSE, "Not overriding : " .. luaFileName)
+        -- log(3, "Not overriding : " .. luaFileName)
         retValue = _open(fileName, mode, perm)
       end
     
   
-      -- log(VERBOSE, retValue)
+      -- log(3, retValue)
       
       return retValue
     
@@ -106,7 +106,7 @@ local function setupIOhooks()
     local o_fopen
     local function fopenHook(fileName, mode)
       local luaFileName = core.readString(fileName)
-      log(VERBOSE, "fopen: " .. tostring(luaFileName) .. " mode: " .. tostring(mode))
+      log(3, "fopen: " .. tostring(luaFileName) .. " mode: " .. tostring(mode))
 
       luaFileName = ucp.internal.resolveAliasedPath(luaFileName)
 
@@ -358,7 +358,7 @@ return {
 
     newFile = newFile:gsub("/+", "\\")
 
-    log(VERBOSE, "Registering override for: " .. file .. ": " .. newFile)
+    log(3, "Registering override for: " .. file .. ": " .. newFile)
 
     FILE_OVERRIDES[file] = newFile
   end,
