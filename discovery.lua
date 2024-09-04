@@ -303,10 +303,13 @@ local function discoverMapFiles_hook(this, ptr_pattern)
     end 
     
   else
-    log(WARNING, string.format("Unhandled pattern: %s", pattern))
+    log(WARNING, string.format("Unmodified pattern: %s", pattern))
     -- Insert the default requested pattern
     table.insert(patterns, pattern)
   end
+  
+  log(VERBOSE, string.format("discoverMapFiles: handler: %s", tostring(dh)))
+  log(VERBOSE, string.format("discoverMapFiles: handler: func: %s", tostring(dh.discoverForPattern)))
   
   for _, p in ipairs(patterns) do
     if dh:discoverForPattern(p) == false then
