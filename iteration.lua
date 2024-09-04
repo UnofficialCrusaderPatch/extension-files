@@ -339,7 +339,7 @@ local function registerOverridesForDirectory(dir, extreme)
   log(DEBUG, "Registering map files in: " .. tostring(dir))
   
   local status, results = pcall(function() 
-    return table.pack(ucp.internal.listFiles(dir))
+    return ucp.internal.io.files(dir)
   end)
   
   if status == nil or status == false then 
