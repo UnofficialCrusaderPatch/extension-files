@@ -6,7 +6,7 @@ A key feature is to provide a method for hijacking specific `open` file operatio
 This extension provides the engine of many extensions that rely on hijacking the `open` operation.
 
 ## Usage
-This extension provides three functions
+This extension provides four functions:
 ```lua
 --[[
 Override/hijack the open operation for a specific file.
@@ -27,4 +27,11 @@ modules.files:registerOverrideFunction(func)
 This function is used by the maploader extension to set parameters for the game's .amp and .sav file loading
 --]]
 modules.files:setIterationOption(key, value)
+
+--[[
+With this function you can set up an alternative location for the game to look for game files (only gm, gfx, fx, binks)
+Maps should be registered with the maploader
+--]]
+modules.files:registerFileSource(path)
+
 ```
