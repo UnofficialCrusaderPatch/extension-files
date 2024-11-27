@@ -4,7 +4,7 @@ local setupBinkHook = require('overrides.setupBinkHook')
 
 local setupMilesHook = require("overrides.setupMilesHook")
 
-local registry = require('overrides.registry')
+local sources = require('overrides.sources')
 
 return {
     enable = function(config)
@@ -15,17 +15,10 @@ return {
         setupMilesHook()
     end,
 
-    overrideFileWith = function(file, newFile)
-        file = file:lower()
+    overrideFileWith = require('overrides.overrideFileWith'),
 
-        newFile = newFile:gsub("/+", "\\")
+    registerOverrideFunction = require("overrides.registerOverrideFunction"),
 
-        log(VERBOSE, "Registering override for: " .. file .. ": " .. newFile)
-
-        registry.FILE_OVERRIDES[file] = newFile
-    end,
-
-    registerOverrideFunction = function(func)
-        table.insert(registry.FILE_OVERRIDE_FUNCTIONS, func)
-    end
+    ---@type fun(path: string):void
+    registerFileSource = sources.registerFileSource,
 }

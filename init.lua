@@ -1,4 +1,3 @@
-
 local namespace = {}
 
 local overrides = require('overrides')
@@ -21,10 +20,16 @@ return {
     setIterationOption = function(self, key, value)
         discovery.setOption(key, value)
     end,
+
+    ---@type fun(self: table, path: string):void
+    registerFileSource = function(self, path)
+        overrides.registerFileSource(path)
+    end,
 }, {
-  public = {
-    "overrideFileWith", 
-    "registerOverrideFunction",
-    "setIterationOption",
-  }
+    public = {
+        "overrideFileWith",
+        "registerOverrideFunction",
+        "setIterationOption",
+        'registerFileSource',
+    }
 }
