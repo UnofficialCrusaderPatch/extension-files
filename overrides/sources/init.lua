@@ -10,39 +10,52 @@ local resolveAliasedPath = io.resolveAliasedPath
 ---@type fun(file: string, newfile: string):void
 local overrideFileWith = require("overrides.overrideFileWith")
 
----@param path string The path to register
+
+local function registerFiles(fullPath, relativePath)
+    for _, file in ipairs(files(fullPath)) do
+        local relativeFile = file:sub(fullPath:len() + 1)
+        local trigger = relativePath:gsub("/", "\\") .. relativeFile
+
+        log(DEBUG, string.format("Setting trigger: %s for %s", trigger, file))
+        overrideFileWith(trigger, file)
+    end
+end
+
+---@param relativePath string The path to register relative to the game directory
 ---@return void
-local function registerFileSource(path)
-    local path = resolveAliasedPath(path)
+local function registerFileSource(relativePath)
+    local path = resolveAliasedPath(relativePath)
     path = path:gsub("\\", "/")
 
     if path:sub(-1) ~= "\\" and path:sub(-1) ~= "/" then
         path = path .. "/"
     end
 
-    for index, subdir in ipairs(directories(path)) do
-        log(INFO, subdir)
+    for _, subdir in ipairs(directories(path)) do
+        log(VERBOSE, subdir)
 
-        local relativePath = subdir:sub(path:len() + 1)
-        log(INFO, relativePath)
+        local relativeSubPath = subdir:sub(path:len() + 1)
+        log(VERBOSE, relativeSubPath)
 
-        if relativePath == "gm/" then
-            log(INFO, 'known relative path: ' .. relativePath)
+        if relativeSubPath == "gm/" or relativeSubPath == "gfx/" or relativeSubPath == "fx/" or relativeSubPath == "binks/" then
+            log(DEBUG, 'registerFileSource: registering relative path: ' .. relativeSubPath)
 
-            for _, file in ipairs(files(subdir)) do
-                log(INFO, file)
-                local relativeFile = file:sub(subdir:len() + 1)
-                log(INFO, relativeFile)
+            registerFiles(subdir, relativeSubPath)
 
-                local trigger = relativePath:gsub("/", "\\") .. relativeFile
+            for _, subsubdir in ipairs(directories(subdir)) do
+                local rsubsubdir = subsubdir:sub(subdir:len() + 1)
+                local relativeSubSubPath = relativeSubPath .. rsubsubdir
 
-                log(INFO, string.format("Setting trigger: %s for %s", trigger, file))
-                overrideFileWith(trigger, file)
+                log(DEBUG, 'registerFileSource: registering relative nested path: ' .. relativeSubSubPath)
+
+                registerFiles(subsubdir, relativeSubSubPath)
             end
+        else
+            log(WARNING, 'registerFileSource: ignoring unsupported relative path: ' .. relativeSubPath)
         end
     end
 end
 
 return {
-  registerFileSource = registerFileSource,
+    registerFileSource = registerFileSource,
 }
