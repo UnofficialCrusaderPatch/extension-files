@@ -30,6 +30,14 @@ local function registerFileSource(relativePath)
     if path:sub(-1) ~= "\\" and path:sub(-1) ~= "/" then
         path = path .. "/"
     end
+    
+    for _, subfile in ipairs(files(path)) do
+      local relativeFile = subfile:sub(path:len() + 1)
+      local trigger = relativeFile
+      
+      log(DEBUG, 'registerFileSource: registering relative root file path: ' .. relativeFile)
+      overrideFileWith(trigger, subfile)
+    end
 
     for _, subdir in ipairs(directories(path)) do
         log(VERBOSE, subdir)
