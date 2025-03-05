@@ -323,7 +323,7 @@ local MAP_SUFFIX = ".map"
 
 -- TODO: this can be moved to the discovery logic
 local function registerOverridesForDirectory(dir, extreme)
-    log(DEBUG, "Registering map files in: " .. tostring(dir))
+    log(DEBUG, "registerOverridesForDirectory: Registering map files in: " .. tostring(dir))
 
     local status, results = pcall(function()
         return ucp.internal.io.files(dir)
@@ -343,7 +343,7 @@ local function registerOverridesForDirectory(dir, extreme)
             if extreme then
                 trigger = "mapsExtreme\\" .. mapName .. ".map"
             end
-            log(DEBUG, "Registering " .. tostring(trigger) .. " => " .. tostring(path))
+            log(DEBUG, "registerOverridesForDirectory: files(): Registering " .. tostring(trigger) .. " => " .. tostring(path))
             modules.files:overrideFileWith(trigger, path)
         end
     end
@@ -479,4 +479,41 @@ return {
         core.hookCode(discoverMapFiles_hook, ptr_discoverMapFiles, 2, 1, 7)
     end,
 
+    ---Register an extra map directory for Crusader, Crusader Extreme, or both (default)
+    ---@param path string The folder containing the maps
+    ---@param which string Either "both", "crusader" or "extreme" indicating which game should load these maps
+    ---@return void
+    registerExtraMapDirectory = function(path, which)
+      if which == nil or which == "both" then
+        which = "both"
+      elseif which == "extreme" then
+        which = "extreme"
+      else
+        which = "crusader"
+      end
+
+      local dir = path
+
+      -- FindNextFile Directory should end with *.map
+      local fnfDir = prepareDir(dir, "map")
+
+      
+
+      if which == "both" or which == "crusader" then
+        log(DEBUG, "Registering extra map crusader dir: " .. tostring(fnfDir))
+        registerExtraDir("maps\\*.map", fnfDir)
+        -- registerExtraDir("mapsExtreme\\*.map", fnfDir)
+
+        registerOverridesForDirectory(dir, false)
+      end
+
+      if which == "both" or which == "extreme" then
+        log(DEBUG, "Registering extra map crusader extreme dir: " .. tostring(fnfDir))
+              -- registerExtraDir("maps\\*.map", fnfDir)
+        registerExtraDir("mapsExtreme\\*.map", fnfDir)
+
+        registerOverridesForDirectory(dir, true)
+      end
+
+    end,
 }
