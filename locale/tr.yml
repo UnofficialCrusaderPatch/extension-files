@@ -1,0 +1,17 @@
+disable-game-maps: maps/ klasörünü atla
+disable-game-maps_descr: Oyunun maps/ klasörü okunmaz. Oyunla gelen haritalar yüklenmez.
+disable-user-maps: Kullanıcı dizinindeki maps/ klasörünü atla
+disable-user-maps_descr: Kullanıcının maps/ klasörü okunmaz. Burada saklanan haritalar yüklenmez.
+disable-user-savs: Kullanıcı dizinindeki saves/ klasörünü atla
+disable-user-savs_descr: Kullanıcının saves/ klasörü okunmaz. Burada saklanan kayıtlı oyunlar yüklenmez.
+extra-map-directory: Ek bir maps/ dizini seçin.
+extra-map-directory_descr: Bu dizindeki harita dosyaları yüklenir ve oyunda kullanılabilir.
+disable-game-maps-extreme: mapsExtreme/ klasörünü atla
+disable-game-maps-extreme_descr: Oyunun mapsExtreme/ klasörü okunmaz. Oyunla gelen haritalar yüklenmez.
+disable-user-maps-extreme: Kullanıcı dizinindeki mapsExtreme/ klasörünü atla
+disable-user-maps-extreme_descr: Kullanıcının mapsExtreme/ klasörü okunmaz. Burada saklanan haritalar yüklenmez.
+disable-user-savs-extreme: Kullanıcı dizinindeki savesExtreme/ klasörünü atla
+disable-user-savs-extreme_descr: Kullanıcının savesExtreme/ klasörü okunmaz. Burada saklanan kayıtlı oyunlar yüklenmez.
+extra-map-extreme-directory: Ek bir mapsExtreme/ dizini seçin.
+extra-map-extreme-directory_descr: Bu dizindeki harita dosyaları yüklenir ve oyunda kullanılabilir.
+tags.tools: Araçlar

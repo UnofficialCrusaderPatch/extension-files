@@ -1,0 +1,17 @@
+disable-game-maps: Пропустить папку maps/
+disable-game-maps_descr: Не читать папку maps/ игры. Карты, поставляемые с игрой, не будут загружены.
+disable-user-maps: Пропустить папку maps/ в каталоге пользователя
+disable-user-maps_descr: Не читать папку maps/ пользователя. Сохранённые там карты не будут загружены.
+disable-user-savs: Пропустить папку saves/ в каталоге пользователя
+disable-user-savs_descr: Не читать папку saves/ пользователя. Сохранённые там игры не будут загружены.
+extra-map-directory: Выбрать дополнительный каталог maps/.
+extra-map-directory_descr: Карты из этого каталога будут загружены и доступны в игре.
+disable-game-maps-extreme: Пропустить папку mapsExtreme/
+disable-game-maps-extreme_descr: Не читать папку mapsExtreme/ игры. Карты, поставляемые с игрой, не будут загружены.
+disable-user-maps-extreme: Пропустить папку mapsExtreme/ в каталоге пользователя
+disable-user-maps-extreme_descr: Не читать папку mapsExtreme/ пользователя. Сохранённые там карты не будут загружены.
+disable-user-savs-extreme: Пропустить папку savesExtreme/ в каталоге пользователя
+disable-user-savs-extreme_descr: Не читать папку savesExtreme/ пользователя. Сохранённые там игры не будут загружены.
+extra-map-extreme-directory: Выбрать дополнительный каталог mapsExtreme/.
+extra-map-extreme-directory_descr: Карты из этого каталога будут загружены и доступны в игре.
+tags.tools: Инструменты

@@ -1,0 +1,22 @@
+disable-game-maps: Ignorer le dossier maps/
+disable-game-maps_descr: Ne lit pas le dossier maps/ du jeu. Les cartes fournies avec le jeu ne seront pas chargées.
+disable-user-maps: Ignorer le dossier maps/ du répertoire utilisateur
+disable-user-maps_descr: Ne lit pas le dossier maps/ de l’utilisateur. Les cartes qui y sont enregistrées ne seront
+  pas chargées.
+disable-user-savs: Ignorer le dossier saves/ du répertoire utilisateur
+disable-user-savs_descr: Ne lit pas le dossier saves/ de l’utilisateur. Les sauvegardes qui y sont enregistrées
+  ne seront pas chargées.
+extra-map-directory: Choisir un répertoire maps/ supplémentaire.
+extra-map-directory_descr: Les cartes de ce répertoire seront chargées et disponibles dans le jeu.
+disable-game-maps-extreme: Ignorer le dossier mapsExtreme/
+disable-game-maps-extreme_descr: Ne lit pas le dossier mapsExtreme/ du jeu. Les cartes fournies avec le jeu ne seront
+  pas chargées.
+disable-user-maps-extreme: Ignorer le dossier mapsExtreme/ du répertoire utilisateur
+disable-user-maps-extreme_descr: Ne lit pas le dossier mapsExtreme/ de l’utilisateur. Les cartes qui y sont enregistrées
+  ne seront pas chargées.
+disable-user-savs-extreme: Ignorer le dossier savesExtreme/ du répertoire utilisateur
+disable-user-savs-extreme_descr: Ne lit pas le dossier savesExtreme/ de l’utilisateur. Les sauvegardes qui y sont
+  enregistrées ne seront pas chargées.
+extra-map-extreme-directory: Choisir un répertoire mapsExtreme/ supplémentaire.
+extra-map-extreme-directory_descr: Les cartes de ce répertoire seront chargées et disponibles dans le jeu.
+tags.tools: Outils

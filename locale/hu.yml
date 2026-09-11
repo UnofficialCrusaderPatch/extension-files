@@ -1,0 +1,20 @@
+disable-game-maps: A(z) maps/ mappa kihagyása
+disable-game-maps_descr: Nem olvassa be a játék maps/ mappáját. A játékhoz mellékelt térképek nem töltődnek be.
+disable-user-maps: A felhasználói könyvtár maps/ mappájának kihagyása
+disable-user-maps_descr: Nem olvassa be a felhasználó maps/ mappáját. Az ott tárolt térképek nem töltődnek be.
+disable-user-savs: A felhasználói könyvtár saves/ mappájának kihagyása
+disable-user-savs_descr: Nem olvassa be a felhasználó saves/ mappáját. Az ott tárolt mentések nem töltődnek be.
+extra-map-directory: További maps/ könyvtár kiválasztása.
+extra-map-directory_descr: A könyvtár térképfájljai betöltődnek és elérhetővé válnak a játékban.
+disable-game-maps-extreme: A(z) mapsExtreme/ mappa kihagyása
+disable-game-maps-extreme_descr: Nem olvassa be a játék mapsExtreme/ mappáját. A játékhoz mellékelt térképek nem
+  töltődnek be.
+disable-user-maps-extreme: A felhasználói könyvtár mapsExtreme/ mappájának kihagyása
+disable-user-maps-extreme_descr: Nem olvassa be a felhasználó mapsExtreme/ mappáját. Az ott tárolt térképek nem
+  töltődnek be.
+disable-user-savs-extreme: A felhasználói könyvtár savesExtreme/ mappájának kihagyása
+disable-user-savs-extreme_descr: Nem olvassa be a felhasználó savesExtreme/ mappáját. Az ott tárolt mentések nem
+  töltődnek be.
+extra-map-extreme-directory: További mapsExtreme/ könyvtár kiválasztása.
+extra-map-extreme-directory_descr: A könyvtár térképfájljai betöltődnek és elérhetővé válnak a játékban.
+tags.tools: Eszközök
