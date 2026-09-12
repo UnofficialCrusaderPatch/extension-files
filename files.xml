@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+  <files>
+    <file src="*.lua" target="." />
+    <file src="definition.yml" target="." />
+    <file src="overrides" target="." />
+    <file src="locale" target="." />
+  </files>
+</module>
