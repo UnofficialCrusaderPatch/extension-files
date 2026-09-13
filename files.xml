@@ -3,6 +3,7 @@
   <files>
     <file src="*.lua" target="." />
     <file src="definition.yml" target="." />
+    <file src="LICENSE" target="." />
     <file src="overrides" target="." />
     <file src="locale" target="." />
   </files>
