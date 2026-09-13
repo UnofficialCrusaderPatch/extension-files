@@ -1,0 +1,19 @@
+name: VFS traversal tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: UnofficialCrusaderPatch/UnofficialCrusaderPatch3
+          ref: 02a7a6bc8ab956a91fc752e8c8ed215c149855e7
+          path: framework-reference
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pytest lupa
+      - run: python -m pytest tests -q
+        env:
+          UCP_FRAMEWORK_TEST_ROOT: framework-reference

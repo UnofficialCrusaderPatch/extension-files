@@ -42,6 +42,11 @@ function files:registerExtraMapDirectory(path, which)
   return discovery.registerExtraMapDirectory(path, which)
 end
 
+---Create a bounded read-only walker. See docs/vfs-walk.md for callback semantics.
+function files:createFileWalker(visitFile, options)
+  return require('walk').create(visitFile, options)
+end
+
 return files, {
     public = {
         "overrideFileWith",
@@ -49,5 +54,6 @@ return files, {
         "setIterationOption",
         'registerFileSource',
         'registerExtraMapDirectory',
+        'createFileWalker',
     }
 }
