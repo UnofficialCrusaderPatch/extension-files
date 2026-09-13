@@ -1,0 +1,21 @@
+disable-game-maps: Ordner maps/ überspringen
+disable-game-maps_descr: Liest den Spielordner maps/ nicht ein. Die mit dem Spiel gelieferten Karten werden nicht
+  geladen.
+disable-user-maps: Ordner maps/ im Benutzerverzeichnis überspringen
+disable-user-maps_descr: Liest den Benutzerordner maps/ nicht ein. Dort gespeicherte Karten werden nicht geladen.
+disable-user-savs: Ordner saves/ im Benutzerverzeichnis überspringen
+disable-user-savs_descr: Liest den Benutzerordner saves/ nicht ein. Dort gespeicherte Spielstände werden nicht geladen.
+extra-map-directory: Zusätzliches maps/-Verzeichnis auswählen.
+extra-map-directory_descr: Kartendateien aus diesem Verzeichnis werden geladen und im Spiel verfügbar gemacht.
+disable-game-maps-extreme: Ordner mapsExtreme/ überspringen
+disable-game-maps-extreme_descr: Liest den Spielordner mapsExtreme/ nicht ein. Die mit dem Spiel gelieferten Karten
+  werden nicht geladen.
+disable-user-maps-extreme: Ordner mapsExtreme/ im Benutzerverzeichnis überspringen
+disable-user-maps-extreme_descr: Liest den Benutzerordner mapsExtreme/ nicht ein. Dort gespeicherte Karten werden
+  nicht geladen.
+disable-user-savs-extreme: Ordner savesExtreme/ im Benutzerverzeichnis überspringen
+disable-user-savs-extreme_descr: Liest den Benutzerordner savesExtreme/ nicht ein. Dort gespeicherte Spielstände
+  werden nicht geladen.
+extra-map-extreme-directory: Zusätzliches mapsExtreme/-Verzeichnis auswählen.
+extra-map-extreme-directory_descr: Kartendateien aus diesem Verzeichnis werden geladen und im Spiel verfügbar gemacht.
+tags.tools: Werkzeuge

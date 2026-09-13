@@ -1,0 +1,19 @@
+disable-game-maps: رد کردن پوشهٔ maps/
+disable-game-maps_descr: پوشهٔ maps/ بازی خوانده نمی‌شود. نقشه‌های همراه بازی بارگذاری نخواهند شد.
+disable-user-maps: رد کردن پوشهٔ maps/ در پوشهٔ کاربر
+disable-user-maps_descr: پوشهٔ maps/ کاربر خوانده نمی‌شود. نقشه‌های ذخیره‌شده در آن بارگذاری نخواهند شد.
+disable-user-savs: رد کردن پوشهٔ saves/ در پوشهٔ کاربر
+disable-user-savs_descr: پوشهٔ saves/ کاربر خوانده نمی‌شود. بازی‌های ذخیره‌شده در آن بارگذاری نخواهند شد.
+extra-map-directory: یک پوشهٔ اضافی maps/ انتخاب کنید.
+extra-map-directory_descr: فایل‌های نقشهٔ این پوشه بارگذاری می‌شوند و در بازی در دسترس خواهند بود.
+disable-game-maps-extreme: رد کردن پوشهٔ mapsExtreme/
+disable-game-maps-extreme_descr: پوشهٔ mapsExtreme/ بازی خوانده نمی‌شود. نقشه‌های همراه بازی بارگذاری نخواهند شد.
+disable-user-maps-extreme: رد کردن پوشهٔ mapsExtreme/ در پوشهٔ کاربر
+disable-user-maps-extreme_descr: پوشهٔ mapsExtreme/ کاربر خوانده نمی‌شود. نقشه‌های ذخیره‌شده در آن بارگذاری نخواهند
+  شد.
+disable-user-savs-extreme: رد کردن پوشهٔ savesExtreme/ در پوشهٔ کاربر
+disable-user-savs-extreme_descr: پوشهٔ savesExtreme/ کاربر خوانده نمی‌شود. بازی‌های ذخیره‌شده در آن بارگذاری نخواهند
+  شد.
+extra-map-extreme-directory: یک پوشهٔ اضافی mapsExtreme/ انتخاب کنید.
+extra-map-extreme-directory_descr: فایل‌های نقشهٔ این پوشه بارگذاری می‌شوند و در بازی در دسترس خواهند بود.
+tags.tools: ابزارها

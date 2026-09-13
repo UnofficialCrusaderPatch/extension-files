@@ -1,0 +1,17 @@
+disable-game-maps: 跳过 maps/ 文件夹
+disable-game-maps_descr: 不读取游戏的 maps/ 文件夹。游戏自带的地图将不会加载。
+disable-user-maps: 跳过用户目录中的 maps/ 文件夹
+disable-user-maps_descr: 不读取用户的 maps/ 文件夹。其中保存的地图将不会加载。
+disable-user-savs: 跳过用户目录中的 saves/ 文件夹
+disable-user-savs_descr: 不读取用户的 saves/ 文件夹。其中保存的存档将不会加载。
+extra-map-directory: 选择额外的 maps/ 目录。
+extra-map-directory_descr: 此目录中的地图文件将被加载，并可在游戏中使用。
+disable-game-maps-extreme: 跳过 mapsExtreme/ 文件夹
+disable-game-maps-extreme_descr: 不读取游戏的 mapsExtreme/ 文件夹。游戏自带的地图将不会加载。
+disable-user-maps-extreme: 跳过用户目录中的 mapsExtreme/ 文件夹
+disable-user-maps-extreme_descr: 不读取用户的 mapsExtreme/ 文件夹。其中保存的地图将不会加载。
+disable-user-savs-extreme: 跳过用户目录中的 savesExtreme/ 文件夹
+disable-user-savs-extreme_descr: 不读取用户的 savesExtreme/ 文件夹。其中保存的存档将不会加载。
+extra-map-extreme-directory: 选择额外的 mapsExtreme/ 目录。
+extra-map-extreme-directory_descr: 此目录中的地图文件将被加载，并可在游戏中使用。
+tags.tools: 工具

@@ -1,0 +1,19 @@
+disable-game-maps: Omitir la carpeta maps/
+disable-game-maps_descr: No lee la carpeta maps/ del juego. Los mapas incluidos con el juego no se cargarán.
+disable-user-maps: Omitir la carpeta maps/ del directorio del usuario
+disable-user-maps_descr: No lee la carpeta maps/ del usuario. Los mapas guardados allí no se cargarán.
+disable-user-savs: Omitir la carpeta saves/ del directorio del usuario
+disable-user-savs_descr: No lee la carpeta saves/ del usuario. Las partidas guardadas allí no se cargarán.
+extra-map-directory: Selecciona un directorio maps/ adicional.
+extra-map-directory_descr: Los mapas de este directorio se cargarán y estarán disponibles en el juego.
+disable-game-maps-extreme: Omitir la carpeta mapsExtreme/
+disable-game-maps-extreme_descr: No lee la carpeta mapsExtreme/ del juego. Los mapas incluidos con el juego no se
+  cargarán.
+disable-user-maps-extreme: Omitir la carpeta mapsExtreme/ del directorio del usuario
+disable-user-maps-extreme_descr: No lee la carpeta mapsExtreme/ del usuario. Los mapas guardados allí no se cargarán.
+disable-user-savs-extreme: Omitir la carpeta savesExtreme/ del directorio del usuario
+disable-user-savs-extreme_descr: No lee la carpeta savesExtreme/ del usuario. Las partidas guardadas allí no se
+  cargarán.
+extra-map-extreme-directory: Selecciona un directorio mapsExtreme/ adicional.
+extra-map-extreme-directory_descr: Los mapas de este directorio se cargarán y estarán disponibles en el juego.
+tags.tools: Herramientas
