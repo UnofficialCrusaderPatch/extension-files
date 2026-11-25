@@ -58,6 +58,11 @@ function files:getMapAvailability(name, which)
   return { available = available, from = from }
 end
 
+---Create a bounded read-only walker. See docs/vfs-walk.md for callback semantics.
+function files:createFileWalker(visitFile, options)
+  return require('walk').create(visitFile, options)
+end
+
 return files, {
     public = {
         "overrideFileWith",
@@ -66,5 +71,6 @@ return files, {
         'registerFileSource',
         'registerExtraMapDirectory',
         'getMapAvailability',
+        'createFileWalker',
     }
 }
