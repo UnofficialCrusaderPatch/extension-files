@@ -42,6 +42,22 @@ function files:registerExtraMapDirectory(path, which)
   return discovery.registerExtraMapDirectory(path, which)
 end
 
+---Whether a map named in the availability.json of an extra map directory can be played today,
+---decided as the map list decides it. Dated maps whose date has come get their file redirects at
+---this call, as when the list is built, so the map can be opened without the list.
+---@param self table the files module itself
+---@param name string the map name, with or without ".map"
+---@param which string|nil "crusader" (default) or "extreme"
+---@return table result { available = boolean, from = string|nil } (one value: the framework passes
+---on only the first result of a public function). available: false while no copy of the dated
+---map can be opened yet; true for a map that is due, or that no availability.json names (also
+---when the map doesn't exist). from: "YYYY-MM-DD", the date of the dated copy that opens, or while
+---none can, the earliest date one opens; nil when no copy is dated or an undated copy opens
+function files:getMapAvailability(name, which)
+  local available, from = discovery.getMapAvailability(name, which)
+  return { available = available, from = from }
+end
+
 return files, {
     public = {
         "overrideFileWith",
@@ -49,5 +65,6 @@ return files, {
         "setIterationOption",
         'registerFileSource',
         'registerExtraMapDirectory',
+        'getMapAvailability',
     }
 }
