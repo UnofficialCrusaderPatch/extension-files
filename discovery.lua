@@ -467,7 +467,8 @@ local DiscoveryHandler = {
             activateDatedMaps(pattern, now)
         end
 
-        if handle ~= -1 then
+        local found = handle ~= -1 and handle ~= 0xFFFFFFFF
+        if found then
             while self.count < 500 do
                 local name = filename()
                 local t = dosTime()
@@ -498,7 +499,7 @@ local DiscoveryHandler = {
                 pattern, notYet, tostring(now)))
         end
 
-        rawInterface.FindClose(handle)
+        if found then rawInterface.FindClose(handle) end
         return self.count < 500
     end,
 
