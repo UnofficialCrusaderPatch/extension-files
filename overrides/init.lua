@@ -5,12 +5,7 @@ local setupBinkHook = require('overrides.setupBinkHook')
 local setupMilesHook = require("overrides.setupMilesHook")
 
 local sources = require('overrides.sources')
-
-local function bind(pattern)
-    local site, reason = core.AOBScanUnique(pattern)
-    assert(site, tostring(reason) .. " (" .. pattern .. ")")
-    return site
-end
+local bind = require('binding')
 
 local function install(feature, fn)
     local ok, reason = pcall(fn, bind)

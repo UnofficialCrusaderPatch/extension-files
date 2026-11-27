@@ -1,4 +1,5 @@
 local overrideRegistry = require('overrides.registry')
+local bind = require('binding')
 
 local DISABLE_GAME_DIR_MAPS = false
 local DISABLE_USER_DIR_MAPS = false
@@ -285,12 +286,6 @@ local function setTodayOverride(value)
     end
     log(INFO, string.format("map-availability-date: dated maps are listed as on %s", value))
     TODAY_OVERRIDE = parsed
-end
-
-local function bind(pattern)
-    local site, reason = core.AOBScanUnique(pattern)
-    assert(site, tostring(reason) .. " (" .. pattern .. ")")
-    return site
 end
 
 local function RawFindFileInterface()
