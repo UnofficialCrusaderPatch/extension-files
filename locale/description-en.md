@@ -6,7 +6,7 @@ A key feature is to provide a method for hijacking specific `open` file operatio
 This extension provides the engine of many extensions that rely on hijacking the `open` operation.
 
 ## Usage
-This extension provides three functions
+This extension provides five functions:
 ```lua
 --[[
 Override/hijack the open operation for a specific file.
@@ -27,4 +27,20 @@ modules.files:registerOverrideFunction(func)
 This function is used by the maploader extension to set parameters for the game's .amp and .sav file loading
 --]]
 modules.files:setIterationOption(key, value)
+
+--[[
+With this function you can set up an alternative location for the game to look for game files (only gm, gfx, fx, binks)
+Maps should be registered with the maploader
+--]]
+modules.files:registerFileSource(path)
+
+--[[
+Add a folder of .map files to the game's map lists. `which` is "both" (default), "crusader" or "extreme".
+Several folders can be registered, for example one per plugin.
+--]]
+modules.files:registerExtraMapDirectory(path, which)
+
 ```
+
+## Maps that appear from a date on
+An extra map folder can hold an `availability.json` that lists maps only from a given date on, in the player's local time, for map packs that open one map per day. The format is in the [README](https://github.com/UnofficialCrusaderPatch/extension-files/blob/main/README.md).
