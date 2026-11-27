@@ -3,6 +3,6 @@ version: 1.5.1
 author: gynt, TheRedDaemon, Krarilotus
 dependencies:
   frontend: ">=1.0.2"
-  framework: ">=3.0.5"
+  framework: ">=3.0.8"
 meta:
   version: 1.0.0

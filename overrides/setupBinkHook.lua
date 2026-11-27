@@ -1,7 +1,7 @@
 local overwriteResource = require('overrides.overwriteResource')
 
-local function setupBinkHook()
-  local addressOfBinkOpenRef = core.readInteger(core.AOBScan("68 ? ? ? ? 50 FF ? ? ? ? ? 89 44 BE 50") + 8)
+local function setupBinkHook(bind)
+  local addressOfBinkOpenRef = core.readInteger(bind("68 ? ? ? ? 50 FF 15 ? ? ? ? 89 44 BE 50") + 8)
   local addressOfBinkOpen = core.readInteger(addressOfBinkOpenRef)
 
   local BinkOpen_callingConvention = 2
