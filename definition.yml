@@ -1,6 +1,6 @@
 name: files
 version: 1.5.1
-author: gynt, TheRedDaemon
+author: gynt, TheRedDaemon, Krarilotus
 dependencies:
   frontend: ">=1.0.2"
   framework: ">=3.0.5"
