@@ -1,9 +1,13 @@
 local overwriteResource = require('overrides.overwriteResource')
 
 
-local function setupMilesHook()
-    local addressOfAILOpenStreamRef = core.readInteger(core.AOBScan("8B 54 24 14 8B 46 04") + 13)
+local function setupMilesHook(bind)
+    local addressOfAILOpenStreamRef = core.readInteger(bind("8B 54 24 14 8B 46 04 6A 00 52 50 FF 15 ? ? ? ?") + 13)
     local addressOfAILOpenStream = core.readInteger(addressOfAILOpenStreamRef)
+    local addressOfAILFileReadRef = core.readInteger(bind('57 8B 7C 24 0C 6A 00 57 FF 15 ? ? ? ?') + 10)
+    local addressOfAILFileRead = core.readInteger(addressOfAILFileReadRef)
+    local addressOfAILFileSizeRef = core.readInteger(bind("8B ? ? ? ? ? 57 89 ? ? ? ? ? ? FF 15 ? ? ? ?") + 16)
+    local addressOfAILFileSize = core.readInteger(addressOfAILFileSizeRef)
 
 
     local AIL_open_stream_argCount = 3
@@ -36,8 +40,6 @@ local function setupMilesHook()
     core.writeCode(addressOfAILOpenStreamRef, { AIL_open_stream_stub })
 
 
-    local addressOfAILFileReadRef = core.readInteger(core.AOBScan('57 8B 7C 24 0C 6A 00 57 FF ? ? ? ? ?') + 10)
-    local addressOfAILFileRead = core.readInteger(addressOfAILFileReadRef)
 
     local AIL_file_read_argCount = 2
     local AIL_file_read_callingConvention = 2
@@ -66,8 +68,6 @@ local function setupMilesHook()
     core.writeCode(addressOfAILFileReadRef, { AIL_file_read_stub })
 
 
-    local addressOfAILFileSizeRef = core.readInteger(core.AOBScan("8B ? ? ? ? ? 57 89 ? ? ? ? ? ? FF ? ? ? ? ?") + 16)
-    local addressOfAILFileSize = core.readInteger(addressOfAILFileSizeRef)
 
     local AIL_file_size_argCount = 1
     local AIL_file_size_callingConvention = 2

@@ -1,4 +1,5 @@
 local overrideRegistry = require('overrides.registry')
+local bind = require('binding')
 
 local DISABLE_GAME_DIR_MAPS = false
 local DISABLE_USER_DIR_MAPS = false
@@ -288,69 +289,38 @@ local function setTodayOverride(value)
 end
 
 local function RawFindFileInterface()
-    local addressOfFindFirstFileARef = core.readInteger(core.AOBScan("8D 4C 24 60 51 57") + 8)
-    local addressOfFindFirstFileA = core.readInteger(addressOfFindFirstFileARef)
-    local callingConventionFindFirstFileA = 2
-    local argCountFindFirstFileA = 2
+    local first = bind("8D 4C 24 60 51 57 FF 15 ? ? ? ?")
+    local next = bind("8D 4C 24 60 51 52 FF 15 ? ? ? ?")
+    local close = bind("FF 15 ? ? ? ? 8B ? ? ? ? ? ? 64 ? ? ? ? ? ? 59")
+    local timeZone = bind("FF 15 ? ? ? ? 83 F8 01 75 09")
+    local multiply = bind("8B 44 24 08 8B 4C 24 10 0B C8")
+    local fileTime = bind("83 F8 FF 89 44 24 24 0F ? ? ? ? ? 81 3E F4 01 00 00")
+    local manager = bind("A1 ? ? ? ? 89 46 74 33 C0 39 ? ? ? ? ? 7E 15")
 
-    local FindFirstFileA = core.exposeCode(addressOfFindFirstFileA, argCountFindFirstFileA,
-        callingConventionFindFirstFileA) -- actually stdcall, so 2 args
-
-    local addressOfFindNextFileARef = core.readInteger(core.AOBScan("8D 4C 24 60 51 52") + 8)
-    local addressOfFindNextFileA = core.readInteger(addressOfFindNextFileARef)
-    local callingConventionFindNextFileA = 2
-    local argCountFindNextFileA = 2
-
-    local FindNextFileA = core.exposeCode(addressOfFindNextFileA, argCountFindNextFileA, callingConventionFindNextFileA) -- actually stdcall
-
-    local addressOfFindCloseRef = core.readInteger(core.AOBScan("FF ? ? ? ? ? 8B ? ? ? ? ? ? 64 ? ? ? ? ? ? 59") + 2)
-    local addressOfFindClose = core.readInteger(addressOfFindCloseRef)
-    local callingConventionFindClose = 2
-    local argCountFindClose = 1
-
-    local FindClose = core.exposeCode(addressOfFindClose, argCountFindClose, callingConventionFindClose)
-
-    local addressOfGetTimeZoneInformationRef = core.readInteger(core.AOBScan("FF ? ? ? ? ? 83 F8 01 75 09") + 2)
-    local addressOfGetTimeZoneInformation = core.readInteger(addressOfGetTimeZoneInformationRef)
-    local callingConventionGetTimeZoneInformation = 2
-    local argCountGetTimeZoneInformation = 1
-
-    local GetTimeZoneInformation = core.exposeCode(addressOfGetTimeZoneInformation, argCountGetTimeZoneInformation,
-        callingConventionGetTimeZoneInformation)
-
-    local allmul = core.exposeCode(core.AOBScan("8B 44 24 08 8B 4C 24 10 0B C8"), 4, 2)
-
-    local addressOfFileTimeToDosDateTimeRef = core.readInteger(core.AOBScan(
-        "83 F8 FF 89 44 24 24 0F ? ? ? ? ? 81 3E F4 01 00 00") + 25 + 2)
-    local addressOfFileTimeToDosDateTime = core.readInteger(addressOfFileTimeToDosDateTimeRef)
-    local callingConventionFileTimeToDosDateTime = 2
-    local argCountFileTimeToDosDateTime = 3
-
-    local FileTimeToDosDateTime = core.exposeCode(addressOfFileTimeToDosDateTime, argCountFileTimeToDosDateTime,
-        callingConventionFileTimeToDosDateTime)
-
-    local ptr_ResourceManager = core.readInteger(core.AOBScan("A1 ? ? ? ? 89 46 74 33 C0 39 ? ? ? ? ? 7E 15") + 1)
-    local ptr_LoadedMapNames = ptr_ResourceManager + 0xbc8
-    local ptr_MapFileTimeArray = ptr_ResourceManager + 0x7fd14
-
+    local findFirst = core.readInteger(core.readInteger(first + 8))
+    local findNext = core.readInteger(core.readInteger(next + 8))
+    local findClose = core.readInteger(core.readInteger(close + 2))
+    local getTimeZone = core.readInteger(core.readInteger(timeZone + 2))
+    local convertFileTime = core.readInteger(core.readInteger(fileTime + 27))
+    local resourceManager = core.readInteger(manager + 1)
 
     return {
-        FindFirstFileA = FindFirstFileA,
-        FindNextFileA = FindNextFileA,
-        FindClose = FindClose,
-        GetTimeZoneInformation = GetTimeZoneInformation,
-        allmul = allmul,
-        FileTimeToDosDateTime = FileTimeToDosDateTime,
-        ptr_LoadedMapNames = ptr_LoadedMapNames,
-        ptr_MapFileTimeArray = ptr_MapFileTimeArray,
-        ptr_ResourceManager = ptr_ResourceManager,
-        ptr_MapFileCounter = ptr_ResourceManager, -- integer value
+        FindFirstFileA = core.exposeCode(findFirst, 2, 2),
+        FindNextFileA = core.exposeCode(findNext, 2, 2),
+        FindClose = core.exposeCode(findClose, 1, 2),
+        GetTimeZoneInformation = core.exposeCode(getTimeZone, 1, 2),
+        allmul = core.exposeCode(multiply, 4, 2),
+        FileTimeToDosDateTime = core.exposeCode(convertFileTime, 3, 2),
+        ptr_LoadedMapNames = resourceManager + 0xbc8,
+        ptr_MapFileTimeArray = resourceManager + 0x7fd14,
+        ptr_ResourceManager = resourceManager,
+        ptr_MapFileCounter = resourceManager,
     }
 end
 
-local rawInterface = RawFindFileInterface()
+local rawInterface
 
-local ptr_timeZoneInformation = core.allocate(172)
+local ptr_timeZoneInformation
 local timeZoneOffset = 0 -- 64 bit
 local timeZoneOffsetLow = 0
 local timeZoneOffsetHigh = 0
@@ -373,10 +343,10 @@ local function computeTimeZoneOffset()
     return timeZoneOffset
 end
 
-local ptr_filetime = core.allocate(8)
-local ptr_dosDateTime = core.allocate(4)
+local ptr_filetime
+local ptr_dosDateTime
 
-local ptr_win32FindData = core.allocate(320)
+local ptr_win32FindData
 
 local function dosTime()
     core.writeInteger(ptr_dosDateTime, 0)
@@ -397,34 +367,12 @@ local function filename()
     return core.readString(ptr_win32FindData + 0x2c)
 end
 
-local ptr_stringBufferThing = core.allocate(28)
+local ptr_stringBufferThing
 
-local documentsMapPattern
-
-local function getDocumentsMapPattern()
-    local _f = core.exposeCode(
-        core.AOBScan(
-            "6A FF 68 ? ? ? ? 64 A1 00 00 00 00 50 83 EC 40 A1 ? ? ? ? 33 C4 89 44 24 3C 53 55 56 57 A1 ? ? ? ? 33 C4 50 8D 44 24 54 64 A3 00 00 00 00 8B 7C 24 64 33 DB 53 8D 44 24 38 50 89 5C 24 1C E8 ? ? ? ? 6A 05"),
-        3, 1)
-    _f(rawInterface.ptr_ResourceManager, ptr_stringBufferThing, 1)
-    local _g = core.exposeCode(core.AOBScan("53 56 8B F1 8B 56 18"), 3, 1)
-    _g(ptr_stringBufferThing, ucp.internal.registerString("*.map"), 5)
-
-    if core.readInteger(ptr_stringBufferThing + 0x18) < 0x10 then
-        documentsMapPattern = core.readString(ptr_stringBufferThing + 0x4)
-    else
-        documentsMapPattern = core.readString(core.readInteger(ptr_stringBufferThing + 0x4))
-    end
-end
-
-local documentsFolder
+local documentsFolder, readDocumentsFolder
 
 local function getDocumentsFolder()
-    local _f = core.exposeCode(
-        core.AOBScan(
-            "6A FF 68 ? ? ? ? 64 A1 00 00 00 00 50 83 EC 40 A1 ? ? ? ? 33 C4 89 44 24 3C 53 55 56 57 A1 ? ? ? ? 33 C4 50 8D 44 24 54 64 A3 00 00 00 00 8B 7C 24 64 33 DB 6A 15"),
-        3, 1)
-    _f(rawInterface.ptr_ResourceManager, ptr_stringBufferThing, 1)
+    readDocumentsFolder(rawInterface.ptr_ResourceManager, ptr_stringBufferThing, 1)
 
     if core.readInteger(ptr_stringBufferThing + 0x18) < 0x10 then
         documentsFolder = core.readString(ptr_stringBufferThing + 0x4)
@@ -435,7 +383,7 @@ local function getDocumentsFolder()
     log(VERBOSE, string.format("getDocumentsFolder: %s", documentsFolder))
 end
 
-local ptr_targetPattern = core.allocate(1001)
+local ptr_targetPattern
 
 local DiscoveryHandler = {
 
@@ -467,7 +415,8 @@ local DiscoveryHandler = {
             activateDatedMaps(pattern, now)
         end
 
-        if handle ~= -1 then
+        local found = handle ~= -1 and handle ~= 0xFFFFFFFF
+        if found then
             while self.count < 500 do
                 local name = filename()
                 local t = dosTime()
@@ -498,7 +447,7 @@ local DiscoveryHandler = {
                 pattern, notYet, tostring(now)))
         end
 
-        rawInterface.FindClose(handle)
+        if found then rawInterface.FindClose(handle) end
         return self.count < 500
     end,
 
@@ -806,9 +755,20 @@ return {
             setTodayOverride(config["map-availability-date"])
         end
 
-        local ptr_discoverMapFiles = core.AOBScan("6A FF 68 ? ? ? ? 64 A1 00 00 00 00 50 81 EC 3C 02 00 00")
-
-        core.hookCode(discoverMapFiles_hook, ptr_discoverMapFiles, 2, 1, 7)
+        local ok, reason = pcall(function()
+            local site = bind("6A FF 68 ? ? ? ? 64 A1 00 00 00 00 50 81 EC 3C 02 00 00")
+            local documents = bind("6A FF 68 ? ? ? ? 64 A1 00 00 00 00 50 83 EC 40 A1 ? ? ? ? 33 C4 89 44 24 3C 53 55 56 57 A1 ? ? ? ? 33 C4 50 8D 44 24 54 64 A3 00 00 00 00 8B 7C 24 64 33 DB 6A 15")
+            rawInterface = RawFindFileInterface()
+            readDocumentsFolder = core.exposeCode(documents, 3, 1)
+            ptr_timeZoneInformation = core.allocate(172)
+            ptr_filetime = core.allocate(8)
+            ptr_dosDateTime = core.allocate(4)
+            ptr_win32FindData = core.allocate(320)
+            ptr_stringBufferThing = core.allocate(28)
+            ptr_targetPattern = core.allocate(1001)
+            core.hookCode(discoverMapFiles_hook, site, 2, 1, 7)
+        end)
+        if not ok then log(ERROR, "Files map discovery is off: " .. tostring(reason)) end
     end,
 
     ---Register an extra map directory for Crusader, Crusader Extreme, or both (default)
