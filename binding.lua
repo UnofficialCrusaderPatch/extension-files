@@ -1,5 +1,5 @@
 return function(pattern)
-    local site, reason = core.AOBScanUnique(pattern)
-    assert(site, tostring(reason) .. " (" .. pattern .. ")")
+    local ok, site = pcall(core.AOBScan, pattern)
+    assert(ok, "not found (" .. pattern .. ")")
     return site
 end
